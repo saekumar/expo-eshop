@@ -12,13 +12,20 @@ app.use(
     credentials: true,
   })
 )
+if (!ENV.CLERK_PUBLISHABLE_KEY || !ENV.CLERK_SECRET_KEY) {
+  throw new Error('Clerk environment variables are not configured')
+}
 app.use(clerkMiddleware())
 
 app.get('/api/check', (req, res) =>
   res.status(200).json({ message: 'success' })
 )
 
-app.listen(ENV.PORT, () => {
-  console.log('server is up and running')
-  connectDB()
-})
+const startServer = async () => {
+  await connectDB()
+  app.listen(ENV.PORT, () => {
+    console.log('server is up and running')
+  })
+}
+
+startServer()
