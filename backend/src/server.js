@@ -22,10 +22,14 @@ app.get('/api/check', (req, res) =>
 )
 
 const startServer = async () => {
-  await connectDB()
-  app.listen(ENV.PORT, () => {
-    console.log('server is up and running')
-  })
+  try {
+    await connectDB()
+    app.listen(ENV.PORT, () => {
+      console.log(`Server is running on port ${ENV.PORT}`)
+    })
+  } catch (error) {
+    console.error('Failed to start server:', error)
+    process.exit(1)
+  }
 }
-
 startServer()
