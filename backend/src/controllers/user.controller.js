@@ -113,10 +113,12 @@ export async function deleteAddress(req, res) {
   try {
     const { addressId } = req.params
     const user = req.user
-
+    const address = user.addresses.id(addressId)
+    if (!address) {
+      return res.status(404).json({ error: 'Address not found' })
+    }
     user.addresses.pull(addressId)
     await user.save()
-
     res.status(200).json({
       message: 'Address deleted successfully',
       addresses: user.addresses,

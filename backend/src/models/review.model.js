@@ -33,4 +33,10 @@ const reviewSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+// Prevent duplicate reviews: one review per user per product per order
+reviewSchema.index({ productId: 1, userId: 1, orderId: 1 }, { unique: true })
+
+// Index for fetching reviews by product
+reviewSchema.index({ productId: 1, createdAt: -1 })
+
 export const Review = mongoose.model('Review', reviewSchema)
