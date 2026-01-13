@@ -33,12 +33,6 @@ export async function createProduct(req, res) {
 
     const uploadResults = await Promise.all(uploadPromises)
 
-    // Delete files from uploads folder after successful cloudinary upload
-    const deletePromises = req.files.map((file) => fs.unlink(file.path))
-    await Promise.all(deletePromises).catch((err) =>
-      console.error('Error deleting local files:', err)
-    )
-
     const imageUrls = uploadResults.map((result) => result.secure_url)
 
     const product = await Product.create({
@@ -97,12 +91,6 @@ export async function updateProduct(req, res) {
       })
 
       const uploadResults = await Promise.all(uploadPromises)
-
-      // Delete files from uploads folder after successful cloudinary upload
-      const deletePromises = req.files.map((file) => fs.unlink(file.path))
-      await Promise.all(deletePromises).catch((err) =>
-        console.error('Error deleting local files:', err)
-      )
 
       product.images = uploadResults.map((result) => result.secure_url)
     }
