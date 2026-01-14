@@ -75,6 +75,7 @@ export interface Review {
   userId: string | User
   orderId: string
   rating: number
+  comment?: string
   createdAt: string
   updatedAt: string
 }
