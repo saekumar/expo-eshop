@@ -7,7 +7,7 @@ export const protectRoute = [
   async (req, res, next) => {
     try {
       console.log('in protect Route ')
-      const clerkId = 'user_37h2xz0QvqrWSpdUiyZJSr7XFCC'
+      const clerkId = 'user_38HvarikePIeMLhE70VQcsbHykv'
       if (!clerkId)
         return res.status(401).json({ message: 'Unauthorized - invalid token' })
 
